@@ -135,9 +135,29 @@ function smoothFrame(ctx, width, height, lineWidth = 1, x = 0, y = 0, cornerRadi
     return true;
 }
 
+// For boxes drawn straight onto a shared canvas (the in-game HUD), where smoothFrame's
+// "destination-in" trick would also erase whatever is underneath the box.
+/** Clips to a rounded rectangle. When this returns true, the caller must call ctx.restore() afterwards. */
+function clipRounded(ctx, x, y, width, height, cornerRadius = getUIGap() / 2) {
+    if (!getSettings().smoothUI || !ctx.roundRect) return false;
+    ctx.save();
+    ctx.beginPath(), ctx.roundRect(x, y, width, height, Math.max(0, Math.min(cornerRadius, width / 2, height / 2))), ctx.clip();
+    return true;
+}
+/** Draws a soft rounded border just inside the given rectangle, without changing the context's state. */
+function strokeRounded(ctx, x, y, width, height, lineWidth = 1, cornerRadius = getUIGap() / 2) {
+    if (!getSettings().smoothUI || !ctx.roundRect) return false;
+    const radius = Math.max(0, Math.min(cornerRadius, width / 2, height / 2)), inset = lineWidth / 2;
+    ctx.save();
+    ctx.strokeStyle = softLineColor, ctx.lineWidth = lineWidth;
+    ctx.beginPath(), ctx.roundRect(x + inset, y + inset, width - lineWidth, height - lineWidth, Math.max(0, radius - inset)), ctx.stroke();
+    ctx.restore();
+    return true;
+}
+
 function parseAccountId(value) {
     const match = /^[a-zA-Z0-9_-]{1,5}/.exec(value);
     return match ? match[0] : null;
 }
 
-export default { getMaxTroops, getDensity, getEstimatedEliminationAttack, isPointInRectangle, fillTextMultiline, textStyleBasedOnDensity, getDuplicateIpHighlightColor, getSameClanHighlightColor, escapeHtml, parseAccountId, lineColor, smoothFrame }
+export default { getMaxTroops, getDensity, getEstimatedEliminationAttack, isPointInRectangle, fillTextMultiline, textStyleBasedOnDensity, getDuplicateIpHighlightColor, getSameClanHighlightColor, escapeHtml, parseAccountId, lineColor, smoothFrame, clipRounded, strokeRounded }
