@@ -469,3 +469,17 @@ label.checkbox .checkmark:after {
 .fx-smooth label.checkbox input:checked ~ .checkmark { background-color: rgba(0, 255, 0, 0.5); }
 @supports not selector(::-webkit-scrollbar) { .fx-smooth * { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.3) transparent; } }
 @media (prefers-reduced-motion: reduce) { .fx-smooth * { animation: none !important; transition: none !important; } }
+
+/* High resolution / glass UI */
+html { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+.fx-smooth .window, .fx-smooth #replayTimebar {
+	backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
+	box-shadow: 0 0.6em 2.2em rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+.fx-smooth .fx-page, .fx-smooth .fx-lobby {
+	backdrop-filter: blur(10px) saturate(130%); -webkit-backdrop-filter: blur(10px) saturate(130%);
+}
+.fx-smooth .fx-box { box-shadow: 0 0.25em 0.9em rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12); }
+.fx-smooth .window button, .fx-smooth .fx-page button {
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0) 55%, rgba(0, 0, 0, 0.12));
+}

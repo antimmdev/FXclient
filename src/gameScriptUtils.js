@@ -129,10 +129,27 @@ function smoothFrame(ctx, width, height, lineWidth = 1, x = 0, y = 0, cornerRadi
     ctx.beginPath(), ctx.rect(x, y, width, height), ctx.clip();
     ctx.globalCompositeOperation = "destination-in", ctx.fillStyle = "#000";
     ctx.beginPath(), ctx.roundRect(x, y, width, height, radius), ctx.fill();
-    ctx.globalCompositeOperation = "source-over", ctx.strokeStyle = softLineColor, ctx.lineWidth = lineWidth;
+    // glass sheen: lit from the top, slightly darker towards the bottom
+    ctx.globalCompositeOperation = "source-atop", ctx.fillStyle = glassSheen(ctx, y, height);
+    ctx.fillRect(x, y, width, height);
+    ctx.globalCompositeOperation = "source-over", ctx.strokeStyle = glassRim(ctx, y, height), ctx.lineWidth = lineWidth;
     if (lineWidth) ctx.beginPath(), ctx.roundRect(x + inset, y + inset, width - lineWidth, height - lineWidth, Math.max(0, radius - inset)), ctx.stroke();
     ctx.restore();
     return true;
+}
+function glassSheen(ctx, y, height) {
+    const g = ctx.createLinearGradient(0, y, 0, y + height);
+    g.addColorStop(0, "rgba(255, 255, 255, 0.11)");
+    g.addColorStop(Math.min(0.5, 40 / Math.max(height, 1)), "rgba(255, 255, 255, 0.03)");
+    g.addColorStop(1, "rgba(0, 0, 0, 0.10)");
+    return g;
+}
+function glassRim(ctx, y, height) {
+    const g = ctx.createLinearGradient(0, y, 0, y + height);
+    g.addColorStop(0, "rgba(255, 255, 255, 0.5)");
+    g.addColorStop(Math.min(0.5, 60 / Math.max(height, 1)), "rgba(255, 255, 255, 0.28)");
+    g.addColorStop(1, "rgba(255, 255, 255, 0.16)");
+    return g;
 }
 
 function clipRounded(ctx, x, y, width, height, cornerRadius = getUIGap() / 2) {
@@ -145,7 +162,7 @@ function strokeRounded(ctx, x, y, width, height, lineWidth = 1, cornerRadius = g
     if (!getSettings().smoothUI || !ctx.roundRect) return false;
     const radius = Math.max(0, Math.min(cornerRadius, width / 2, height / 2)), inset = lineWidth / 2;
     ctx.save();
-    ctx.strokeStyle = softLineColor, ctx.lineWidth = lineWidth;
+    ctx.strokeStyle = glassRim(ctx, y, height), ctx.lineWidth = lineWidth;
     ctx.beginPath(), ctx.roundRect(x + inset, y + inset, width - lineWidth, height - lineWidth, Math.max(0, radius - inset)), ctx.stroke();
     ctx.restore();
     return true;

@@ -37,6 +37,8 @@ var settings = {
   highlightDuplicateIps: false,
   highlightSameClan: false,
   smoothUI: true,
+  hdMapRendering: true,
+  renderResolution: "4k",
   detailedTeamPercentage: false,
   openDonationHistoryFromLb: true,
   //"customMapFileBtn": true
@@ -482,6 +484,24 @@ const settingsManager = new (function () {
       type: "checkbox",
       label: "Smoother UI style",
       note: "Softer lines, rounded boxes, fading pages and buttons, thin scrollbars, a cleaner multiplayer lobby and a matching in-game HUD, stats page, exit menu and popups.",
+    },
+    SectionHeader("Graphics"),
+    {
+      for: "hdMapRendering",
+      type: "checkbox",
+      label: "Ultra HD realistic map",
+      note: "Renders the map with the GPU: high resolution terrain with relief shading, natural colors, deep water with foam along the coasts, and smooth anti-aliased territory borders instead of square pixels.",
+    },
+    {
+      for: "renderResolution",
+      type: "selectMenu",
+      label: "Render resolution:",
+      tooltip: "4K supersampling renders the game at (at least) 3840x2160 and scales it to your screen, for the sharpest possible text, lines and map.",
+      options: [
+        { value: "4k", label: "4K (supersampled, sharpest)" },
+        { value: "native", label: "Native screen resolution" },
+        { value: "game", label: "Game default (fastest)" },
+      ],
     },
     //{ for: "hideAllLinks", type: "checkbox", label: "Hide Links option also hides app store links" },
     SectionHeader("In-game display"),

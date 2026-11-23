@@ -32,12 +32,13 @@ FX Client is the first Territorial.io client, offering a better User Interface a
 11. Adds a win counter & an in-game tick counter
 12. Makes replays more useful by auto-saving recent games and adding a seek bar for rewinding/fast-forwarding replays
 13. Can be installed as a PWA (progressive web app) and works offline both as an installed app and in the browser
+14. Ultra HD realistic map rendering (GPU): high resolution terrain with relief shading, natural colors, deep water with surf along the coasts, and smooth anti-aliased territory borders, rendered at up to 4K (supersampled)
 
 #### The client has a settings menu, from which you can:
 
-14. Make fullscreen mode trigger automatically
-15. Set a custom main menu background
-16. Create custom attack percentage keybinds that are also usable on mobile (with optional on-screen buttons)
+15. Make fullscreen mode trigger automatically
+16. Set a custom main menu background
+17. Create custom attack percentage keybinds that are also usable on mobile (with optional on-screen buttons)
 
 ... and more!
 

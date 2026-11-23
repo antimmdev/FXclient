@@ -21,6 +21,7 @@ import followedAccounts from './followedAccounts.js';
 import passwordReset from './passwordReset.js';
 import savedAccounts from './savedAccounts.js';
 import shipSmoothing from './shipSmoothing.js';
+import hd from './hdRenderer.js';
 
 window.__fx = window.__fx || {};
 const __fx = window.__fx;
@@ -56,5 +57,6 @@ __fx.followedAccounts = followedAccounts;
 __fx.passwordReset = passwordReset;
 __fx.savedAccounts = savedAccounts;
 __fx.shipSmoothing = shipSmoothing;
+__fx.hd = hd;
 
 console.log('Successfully loaded FX Client');
